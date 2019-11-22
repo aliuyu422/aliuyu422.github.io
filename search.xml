@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>tags</title>
+    <url>/2019/11/22/tags/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>categories</title>
+    <url>/2019/11/22/categories/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>手把手教你使用Hexo搭建github个人博客</title>
+    <url>/2019/09/11/hello-world/</url>
+    <content><![CDATA[<p>asdsadasdsadsadasdad</p>
+<a id="more"></a>
+<p>12sdsadsadsa</p>
+]]></content>
+      <categories>
+        <category>工具</category>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>工具</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+</search>
