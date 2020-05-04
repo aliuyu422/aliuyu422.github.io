@@ -48,14 +48,15 @@
 
   <meta name="description" content="业精于勤荒于嬉，行成于思毁于随。">
 <meta property="og:type" content="website">
-<meta property="og:title" content="一件小事">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;tags&#x2F;hexo&#x2F;index.html">
+<meta property="og:title" content="标签">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;tags&#x2F;index.html">
 <meta property="og:site_name" content="一件小事">
 <meta property="og:description" content="业精于勤荒于嬉，行成于思毁于随。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-05-04T09:06:11.538Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/tags/hexo/">
+<link rel="canonical" href="http://yoursite.com/tags/">
 
 
 <script id="page-configurations">
@@ -64,12 +65,13 @@
     sidebar: "",
     isHome: false,
     isPost: false,
-    isPage: false,
+    isPage: true,
     isArchive: false
   };
 </script>
 
-  <title>标签: hexo | 一件小事</title>
+  <title>标签 | 一件小事
+  </title>
   
 
 
@@ -196,54 +198,53 @@
       <div class="main-inner">
         <div class="content-wrap">
           
+  
+  
 
           <div class="content">
             
 
+  <div class="posts-expand">
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">标签
+</h1>
+
+<div class="post-meta">
   
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h1 class="collection-header">hexo
-          <small>标签</small>
-        </h1>
-      </div>
+
+</div>
+
+</header>
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-09-11T19:06:18+08:00"
-              content="2019-09-11">
-          09-11
-        </time>
+      
+      
+      <div class="post-body">
+          <div class="tag-cloud">
+            <div class="tag-cloud-title">
+              目前共计 1 个标签
+            </div>
+            <div class="tag-cloud-tags">
+              <a href="/tags/app/" style="font-size: 12px; color: #ccc">app</a>
+            </div>
+          </div>
+        
       </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/09/11/hello-world/" itemprop="url">
-            <span itemprop="name">手把手教你使用Hexo搭建github个人博客</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
+      
+      
+      
     </div>
+    
+
+    
+    
+    
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
@@ -287,17 +288,21 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">1</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">分类</span>
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">标签</span>
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -334,7 +339,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -342,14 +347,39 @@
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
   </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
-  </div>
+<span id="sitetime"></span>
+<script language=javascript>
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    var t1 = Date.UTC(2018,06,07,12,00,00); // 设置建立网站的时间
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+diffYears+" 年 "diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }
+  siteTime();
+</script>
 
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共2字</span>
+  <span class="post-count">博客全站共484字</span>
   <span class="post-meta-divider">|</span>
   本站总访问量<span id="busuanzi_value_site_pv"></span>次
   <span class="post-meta-divider">|</span>
