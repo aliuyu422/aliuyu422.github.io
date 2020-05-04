@@ -41,7 +41,7 @@
   <entry>
     <title>uniapp离线打包</title>
     <url>/2019/06/28/uniapp%E7%A6%BB%E7%BA%BF%E6%89%93%E5%8C%85/</url>
-    <content><![CDATA[<h2 id="1-下载SDK"><a href="#1-下载SDK" class="headerlink" title="1.下载SDK"></a>1.下载SDK</h2><p><strong>链接:</strong> <a href="https://ask.dcloud.net.cn/article/103" target="_blank" rel="noopener">官方SDK下载链接</a>.</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="1-下载SDK"><a href="#1-下载SDK" class="headerlink" title="1.下载SDK"></a>1.下载SDK</h2><p><strong>链接:</strong> <a href="https://ask.dcloud.net.cn/article/103" target="_blank" rel="noopener">官方SDK下载链接</a>.</p>
 <a id="more"></a>
 
 <p>进入链接后可以找到最新的SDK，同时也可以在<strong>Android平台历史版本</strong>里面找到历史版本的SDK，可以根据自己的需要进行下载。</p>
