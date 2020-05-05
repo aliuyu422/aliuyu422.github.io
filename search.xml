@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>vue原理篇————MVVM模式、响应式数据</title>
+    <url>/2020/05/05/vue%E5%8E%9F%E7%90%86%E7%AF%871/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>三个奇怪的词：当我说“未来”这个词时，第一音发出后即成了过去，当我说寂静这个词，我打破了它，当我说“无”时，我在无中生有。</p>
+<a id="more"></a>
+
+<h3 id="MVVM模式的原理："><a href="#MVVM模式的原理：" class="headerlink" title="MVVM模式的原理："></a>MVVM模式的原理：</h3><p>传统的MVC模式的原理：开发人员将js代码分为了三个板块，数据(Model)、逻辑控制(Controller)、视图(View)，数据板块只负责数据部；,视图板块负责更改样式；逻辑控制负责联系视图板块和数据板块。使用MVC的目的是将M和V的实现代码分离，从而使同一个程序可以使用不同的表现形式。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200505214113616.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70#pic_center" alt="MVC模式"></p>
+<p>MVVM由：Model、View、ViewModel组成，不需要用户手动操作dom元素，而是将数据绑定到viewModel层上，会将数据渲染到界面中，同时视图的变化也会通知viewModel更新数据。</p>
+<p><img src="https://img-blog.csdnimg.cn/2020050521412582.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70#pic_center" alt="MVVC模式"></p>
+<h3 id="响应式数据"><a href="#响应式数据" class="headerlink" title="响应式数据"></a>响应式数据</h3><p>响应式数据原理的核心是<u>Object.defineProperty</u>。默认<code>Vue</code>在初始化数据时，会给<code>data</code>中的属性使用<code>Object.defineProperty</code>重新定义所有属性,当页面取到对应属性时。会进行<u>依赖收集</u>（收集当前组件的watcher） 如果属性发生变化会通知相关依赖进行更新操作。</p>
+<ol>
+<li>初始化用户传入的data数据| initData;</li>
+<li>将数据进行观测 | new observer;</li>
+<li>进行对象的处理 | this.walk;</li>
+<li>循环对象属性，定义响应式变化 | define Reactive;</li>
+<li>重新定义数据 | Object.defineProperty</li>
+</ol>
+<p>对应的源码如下：</p>
+<ol>
+<li><pre><code>Object.defineProperty(obj, key, {
+    enumerable: true,
+    configurable: true,
+    get: function reactiveGetter () {
+      const value = getter ? getter.call(obj) : val
+      if (Dep.target) {
+        dep.depend() // ** 收集依赖 ** /
+        if (childOb) {
+          childOb.dep.depend()
+          if (Array.isArray(value)) {
+            dependArray(value)
+          }
+        }
+      }
+      return value
+    },
+    set: function reactiveSetter (newVal) {
+      const value = getter ? getter.call(obj) : val
+      if (newVal === value || (newVal !== newVal &amp;&amp; value !== value)) {
+        return
+      }
+      if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp; customSetter) {
+        customSetter()
+      }
+      val = newVal
+      childOb = !shallow &amp;&amp; observe(newVal)
+      dep.notify() /**通知相关依赖进行更新**/
+    }
+  })</code></pre></li>
+</ol>
+<p>​    </p>
+]]></content>
+      <categories>
+        <category>vue</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2020年4月的一些小事</title>
     <url>/2020/05/04/2020%E5%B9%B44%E6%9C%88%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E4%BA%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p><strong>2020年4月的一些小事：</strong></p>
@@ -45,7 +104,7 @@
 <a id="more"></a>
 
 <p>进入链接后可以找到最新的SDK，同时也可以在<strong>Android平台历史版本</strong>里面找到历史版本的SDK，可以根据自己的需要进行下载。</p>
-<p><img src="https://img-blog.csdnimg.cn/20200313093002741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70" alt=""></p>
+<p><img src="https://img-blog.csdnimg.cn/20200313093002741.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70" alt></p>
 <h2 id="2-打开Android-Studio"><a href="#2-打开Android-Studio" class="headerlink" title="2. 打开Android Studio"></a>2. 打开Android Studio</h2><p>导入你第1步下载的SDK 然后导入<br><img src="https://img-blog.csdnimg.cn/20200313095311348.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <p><img src="https://img-blog.csdnimg.cn/20200313095407612.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>至此就已经完全引入项目了</p>
 <p>然后在目录结构下打开 默认的资源目录www<br><img src="https://img-blog.csdnimg.cn/20200313095843300.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>

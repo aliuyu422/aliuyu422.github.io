@@ -46,16 +46,21 @@
   };
 </script>
 
-  <meta name="description" content="业精于勤荒于嬉，行成于思毁于随。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="一件小事">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;tags&#x2F;live&#x2F;index.html">
+  <meta name="description" content="三个奇怪的词：当我说“未来”这个词时，第一音发出后即成了过去，当我说寂静这个词，我打破了它，当我说“无”时，我在无中生有。">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue原理篇————MVVM模式、响应式数据">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;05&#x2F;vue%E5%8E%9F%E7%90%86%E7%AF%871&#x2F;index.html">
 <meta property="og:site_name" content="一件小事">
-<meta property="og:description" content="业精于勤荒于嬉，行成于思毁于随。">
+<meta property="og:description" content="三个奇怪的词：当我说“未来”这个词时，第一音发出后即成了过去，当我说寂静这个词，我打破了它，当我说“无”时，我在无中生有。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20200505214113616.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;2020050521412582.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:updated_time" content="2020-05-05T13:46:31.566Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20200505214113616.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70#pic_center">
 
-<link rel="canonical" href="http://yoursite.com/tags/live/">
+<link rel="canonical" href="http://yoursite.com/2020/05/05/vue%E5%8E%9F%E7%90%86%E7%AF%871/">
 
 
 <script id="page-configurations">
@@ -63,13 +68,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>标签: live | 一件小事</title>
+  <title>vue原理篇————MVVM模式、响应式数据 | 一件小事</title>
   
 
 
@@ -200,50 +205,171 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h1 class="collection-header">live
-          <small>标签</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/05/vue%E5%8E%9F%E7%90%86%E7%AF%871/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/myblog.png">
+      <meta itemprop="name" content="Larryu">
+      <meta itemprop="description" content="业精于勤荒于嬉，行成于思毁于随。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一件小事">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vue原理篇————MVVM模式、响应式数据
         </h1>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-05 21:46:00 / 修改时间：21:46:31" itemprop="dateCreated datePublished" datetime="2020-05-05T21:46:00+08:00">2020-05-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue/" itemprop="url" rel="index">
+                    <span itemprop="name">vue</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2020</h1>
+        <p>三个奇怪的词：当我说“未来”这个词时，第一音发出后即成了过去，当我说寂静这个词，我打破了它，当我说“无”时，我在无中生有。</p>
+<a id="more"></a>
+
+<h3 id="MVVM模式的原理："><a href="#MVVM模式的原理：" class="headerlink" title="MVVM模式的原理："></a>MVVM模式的原理：</h3><p>传统的MVC模式的原理：开发人员将js代码分为了三个板块，数据(Model)、逻辑控制(Controller)、视图(View)，数据板块只负责数据部；,视图板块负责更改样式；逻辑控制负责联系视图板块和数据板块。使用MVC的目的是将M和V的实现代码分离，从而使同一个程序可以使用不同的表现形式。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200505214113616.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70#pic_center" alt="MVC模式"></p>
+<p>MVVM由：Model、View、ViewModel组成，不需要用户手动操作dom元素，而是将数据绑定到viewModel层上，会将数据渲染到界面中，同时视图的变化也会通知viewModel更新数据。</p>
+<p><img src="https://img-blog.csdnimg.cn/2020050521412582.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70#pic_center" alt="MVVC模式"></p>
+<h3 id="响应式数据"><a href="#响应式数据" class="headerlink" title="响应式数据"></a>响应式数据</h3><p>响应式数据原理的核心是<u>Object.defineProperty</u>。默认<code>Vue</code>在初始化数据时，会给<code>data</code>中的属性使用<code>Object.defineProperty</code>重新定义所有属性,当页面取到对应属性时。会进行<u>依赖收集</u>（收集当前组件的watcher） 如果属性发生变化会通知相关依赖进行更新操作。</p>
+<ol>
+<li>初始化用户传入的data数据| initData;</li>
+<li>将数据进行观测 | new observer;</li>
+<li>进行对象的处理 | this.walk;</li>
+<li>循环对象属性，定义响应式变化 | define Reactive;</li>
+<li>重新定义数据 | Object.defineProperty</li>
+</ol>
+<p>对应的源码如下：</p>
+<ol>
+<li><pre><code>Object.defineProperty(obj, key, {
+    enumerable: true,
+    configurable: true,
+    get: function reactiveGetter () {
+      const value = getter ? getter.call(obj) : val
+      if (Dep.target) {
+        dep.depend() // ** 收集依赖 ** /
+        if (childOb) {
+          childOb.dep.depend()
+          if (Array.isArray(value)) {
+            dependArray(value)
+          }
+        }
+      }
+      return value
+    },
+    set: function reactiveSetter (newVal) {
+      const value = getter ? getter.call(obj) : val
+      if (newVal === value || (newVal !== newVal &amp;&amp; value !== value)) {
+        return
+      }
+      if (process.env.NODE_ENV !== &apos;production&apos; &amp;&amp; customSetter) {
+        customSetter()
+      }
+      val = newVal
+      childOb = !shallow &amp;&amp; observe(newVal)
+      dep.notify() /**通知相关依赖进行更新**/
+    }
+  })</code></pre></li>
+</ol>
+<p>​    </p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
+	
+			<div>
+			
+				<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+			
+			</div>
+        
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-05-04T23:44:00+08:00"
-              content="2020-05-04">
-          05-04
-        </time>
-      </div>
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Larryu
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/05/05/vue%E5%8E%9F%E7%90%86%E7%AF%871/" title="vue原理篇————MVVM模式、响应式数据">http://yoursite.com/2020/05/05/vue%E5%8E%9F%E7%90%86%E7%AF%871/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/undefined" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/05/04/2020%E5%B9%B44%E6%9C%88%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E4%BA%8B/" itemprop="url">
-            <span itemprop="name">2020年4月的一些小事</span>
-          </a>
-      </h2>
+	  
 
-    </header>
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"># vue</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/05/04/2020%E5%B9%B44%E6%9C%88%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E4%BA%8B/" rel="next" title="2020年4月的一些小事">
+                  <i class="fa fa-chevron-left"></i> 2020年4月的一些小事
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
   </article>
+  
+  
+  
 
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
@@ -272,6 +398,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#MVVM模式的原理："><span class="nav-number">1.</span> <span class="nav-text">MVVM模式的原理：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应式数据"><span class="nav-number">2.</span> <span class="nav-text">响应式数据</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
