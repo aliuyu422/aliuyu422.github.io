@@ -1,6 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>当我们输入网址后都发生了什么？！！</title>
+    <url>/2020/05/06/%E8%BE%93%E5%85%A5URL%E5%90%8E%E5%8F%91%E7%94%9F%E4%BA%86%E4%BA%9B%E4%BB%80%E4%B9%88/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>我们每天都在浏览器访问网页，但是在这短短的一秒，你难道不想知道它究竟经历了些什么？</p>
+<a id="more"></a>
+<h2 id="1-输入url："><a href="#1-输入url：" class="headerlink" title="1.输入url："></a>1.输入url：</h2><p>首先让我们来区别一下url、域名、网址的定义吧，例如：<a href="http://mail.163.com/index.html" target="_blank" rel="noopener">http://mail.163.com/index.html</a></p>
+<ol>
+<li>http://:这个是协议，也就是HTTP超文本传输协议，也就是网页在网上传输的协议。</li>
+<li>mail：这个是服务器名，代表着是一个邮箱服务器，所以是mail.</li>
+<li>163.com:这个是域名，是用来定位网站的独一无二的名字。</li>
+<li>mail.163.com：这个是网站名，由服务器名+域名组成。</li>
+<li>/：这个是根目录，也就是说，通过网站名找到服务器，然后在服务器存放网页的根目录</li>
+<li>index.html：这个是根目录下的默认网页（当然，163的默认网页是不是这个我不知道，只是大部分的默认网页，都是index.html）</li>
+<li><a href="http://mail.163.com/index.html:这个叫做URL，统一资源定位符，全球性地址，用于定位网上的资源。" target="_blank" rel="noopener">http://mail.163.com/index.html:这个叫做URL，统一资源定位符，全球性地址，用于定位网上的资源。</a></li>
+</ol>
+<h2 id="2-浏览器查找域名的ip地址"><a href="#2-浏览器查找域名的ip地址" class="headerlink" title="2.浏览器查找域名的ip地址"></a>2.浏览器查找域名的ip地址</h2><p>我们知道的去住酒店，都有一个房间号，这个房间号就好像是一个域名，对应到这个房间的地址。但是一般一个ip地址可以有多个域名，但是一个域名对应一个ip地址。</p>
+<ul>
+<li>查找浏览器缓存：浏览器一般会缓存DNS记录一段时间（谷歌浏览器大概12分钟左右），浏览器去查找这些缓存，如果有缓存，直接返回ip。</li>
+<li>查找系统缓存：浏览器缓存中找不到IP之后，就会去查找本机的hosts文件，如果能找到，直接返回ip。</li>
+<li>查找路由器缓存：路由器一般都有自己的DNS缓存，将前面的请求发给路由器，查找ISP服务商缓存DNS的服务器，如果查找到ip则直接返回。</li>
+<li>递归查询：ISP的DNS服务器会进行递归查询，所谓递归查询就是以DNS客户的身份，向其他根域名服务器继续发出查询请求报文，而不是让该主机自己进行下一步查询。</li>
+<li>迭代查询：本地域名服务器采用迭代查询，它先向一个根域名服务器查询。就是当根域名服务器收到本地域名服务器发出的查询请求报文后，要么告诉本地域名服务器下一步应该查询哪一个域名服务器，然后本地域名服务器自己进行后续的查询。（而不是替代本地域名服务器进行后续查询）。</li>
+</ul>
+<h2 id="3-浏览器与目标服务器建立TCP连接"><a href="#3-浏览器与目标服务器建立TCP连接" class="headerlink" title="3.浏览器与目标服务器建立TCP连接"></a>3.浏览器与目标服务器建立TCP连接</h2><p>主机浏览器通过DNS解析得到了目标服务器的IP地址后，与服务器建立TCP连接。<br>经典的TCP三次握手连接：<br><img src="https://img-blog.csdnimg.cn/20200506141352764.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70" alt="在TCP的三次握手"></p>
+<h2 id="4-浏览器通过http协议发送请求"><a href="#4-浏览器通过http协议发送请求" class="headerlink" title="4.浏览器通过http协议发送请求"></a>4.浏览器通过http协议发送请求</h2><p><img src="https://img-blog.csdnimg.cn/20200506210049860.png" alt="在这里插入图片描述"></p>
+<p>浏览器向主机发起一个HTTP-GET方法报文请求。请求中包含访问的URL ，KeepAlive，长连接，还有User-Agent用户浏览器操作系统信息，编码等。</p>
+<p>这时，假如在学校的选课系统上，同时有很多人同时在请求访问，服务器肯定会出现崩溃的情况，这时候该如何是好。</p>
+<blockquote>
+<p>什么是反向代理服务器<br>客户端的本来可以直接通过HTTP协议访问应用服务器，但是网站管理员在中间添加了一个Nginx，这样客户端会先将请求发送到Nginx，Nginx请求应用服务器，然后将结果返回给客户端，Nginx就扮演着反向代理服务器器的角色。</p>
+</blockquote>
+<h2 id="5-服务器响应"><a href="#5-服务器响应" class="headerlink" title="5.服务器响应"></a>5.服务器响应</h2><p>服务器接收到获取请求，然后处理并返回一个响应。返回状态码200 OK，表示服务器可以响应请求，返回报文，浏览器以HTML形式呈现。</p>
+<p>经过上面的几个步骤，服务器收到客户端请求，并已经处理，这时候需要把处理结果返回，也就是返回一个HTTP响应。<br>HTTP响应与HTTP请求类似，也包括如下三个部分：</p>
+<ol>
+<li>状态行</li>
+<li>响应头</li>
+<li>响应正文</li>
+</ol>
+<p><img src="https://img-blog.csdnimg.cn/20200506204305637.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><strong>常用的状态码：</strong><br>1xx：信息性状态码，表示服务器已接收了客户端请求，客户端可继续发送请求。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">100 Continue</span><br><span class="line">101 Switching Protocols</span><br></pre></td></tr></table></figure>
+
+<p>2xx：成功状态码，表示服务器已成功接收到请求并进行处理。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">200 OK 表示客户端请求成功</span><br><span class="line">204 No Content 成功，但不返回任何实体的主体部分</span><br><span class="line">206 Partial Content 成功执行了一个范围（Range）请求</span><br></pre></td></tr></table></figure>
+
+<p>3xx： 重定向状态码，表示服务器要求客户端重定向。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">301 Moved Permanently 永久性重定向，响应报文的Location首部应该有该资源的新URL</span><br><span class="line">302 Found 临时性重定向，响应报文的Location首部给出的URL用来临时定位资源</span><br><span class="line">303 See Other 请求的资源存在着另一个URI，客户端应使用GET方法定向获取请求的资源</span><br><span class="line">304 Not Modified 服务器内容没有更新，可以直接读取浏览器缓存</span><br><span class="line">307 Temporary Redirect 临时重定向。与302 Found含义一样。</span><br></pre></td></tr></table></figure>
+
+<p>4xx：客户端错误状态码，表示客户端的请求有非法内容。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">400 Bad Request 表示客户端请求有语法错误，不能被服务器所理解</span><br><span class="line">401 Unauthonzed 表示请求未经授权，该状态代码必须与 WWW-Authenticate 报头域一起使用</span><br><span class="line">403 Forbidden 表示服务器收到请求，但是拒绝提供服务，通常会在响应正文中给出不提供服务的原因</span><br><span class="line">404 Not Found 请求的资源不存在，例如，输入了错误的URL</span><br></pre></td></tr></table></figure>
+
+<p>5xx：服务器错误状态码，表示服务器未能正常处理客户端的请求而出现意外错误。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">500 Internel Server Error 表示服务器发生不可预期的错误，导致无法完成客户端的请求</span><br><span class="line">503 Service Unavailable 表示服务器当前不能够处理客户端的请求，在一段时间之后，服务器可能会恢复正常</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-浏览器显示HTML"><a href="#6-浏览器显示HTML" class="headerlink" title="6.浏览器显示HTML"></a>6.浏览器显示HTML</h2><p><img src="https://img-blog.csdnimg.cn/20200506204701658.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ol>
+<li>浏览器把获取到的HTML代码解析成1个DOM树，HTML中的每个tag都是DOM树中的1个节点，根节点就是我们常用的document对象。DOM树里包含了所有HTML标签，包括display:none隐藏，还有用JS动态添加的元素等。</li>
+<li>浏览器把所有样式(用户定义的CSS和用户代理)解析成样式结构体，在解析的过程中会去掉浏览器不能识别的样式，比如IE会去掉-moz开头的样式，而FF会去掉_开头的样式。</li>
+<li>DOM Tree 和样式结构体组合后构建render tree, render tree类似于DOM tree，但区别很大，render tree能识别样式，render tree中每个NODE都有自己的style，而且 render tree不包含隐藏的节点(比如display:none的节点，还有head节点)，因为这些节点不会用于呈现，而且不会影响呈现的，所以就不会包含到 render tree中。注意 visibility:hidden隐藏的元素还是会包含到render tree中的，因为visibility:hidden 会影响布局(layout)，会占有空间。根据CSS2的标准，render tree中的每个节点都称为Box (Box dimensions)，理解页面元素为一个具有填充、边距、边框和位置的盒子。</li>
+<li>一旦render tree构建完毕后，浏览器就可以根据render tree来绘制页面了。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>高频面试题</category>
+      </categories>
+      <tags>
+        <tag>高频面试题</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue原理篇——MVVM模式、响应式数据</title>
     <url>/2020/05/05/vue%E5%8E%9F%E7%90%86%E7%AF%871/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>三个奇怪的词：当我说“未来”这个词时，第一音发出后即成了过去，当我说寂静这个词，我打破了它，当我说“无”时，我在无中生有。</p>
