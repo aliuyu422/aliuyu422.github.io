@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="一件小事" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","b2t":true,"scrollpercent":true,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="当我们默念文字的时候，那声音是谁的？">
+<meta name="keywords" content="高频面试题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="几种真的很常见的跨域解决方案！">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;13&#x2F;%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95&#x2F;index.html">
+<meta property="og:site_name" content="一件小事">
+<meta property="og:description" content="当我们默念文字的时候，那声音是谁的？">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20200513200210588.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-05-13T14:25:32.116Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20200513200210588.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70">
+
+<link rel="canonical" href="http://yoursite.com/2020/05/13/%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>几种真的很常见的跨域解决方案！ | 一件小事</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+	<script type="text/javascript" src="/js/clicklove.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">一件小事</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Say what you did.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/myblog.png">
+      <meta itemprop="name" content="Larryu">
+      <meta itemprop="description" content="业精于勤荒于嬉，行成于思毁于随。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="一件小事">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          几种真的很常见的跨域解决方案！
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-13 22:23:47 / 修改时间：22:25:32" itemprop="dateCreated datePublished" datetime="2020-05-13T22:23:47+08:00">2020-05-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%AB%98%E9%A2%91%E9%9D%A2%E8%AF%95%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">高频面试题</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>当我们默念文字的时候，那声音是谁的？</p>
+<a id="more"></a>
+<h2 id="什么是跨域"><a href="#什么是跨域" class="headerlink" title="什么是跨域"></a>什么是跨域</h2><p>广义的理解：跨域是指一个域下的文档或脚本试图去请求另一个域下的资源。<br>狭义的理解：是由浏览器同源策略限制的一类请求场景。</p>
+<p>我们这里重点从狭义上去寻找几种常用的跨域解决方法。</p>
+<h2 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h2><p>同源策略（SOP）是一种约定，由Netscape公司1995年引入浏览器，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSFR等攻击。所谓同源是指”<strong>协议+域名+端口</strong>“三者相同。</p>
+<p><strong>举一些简单的栗子吧：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http:www.baidu.com</span><br><span class="line">https:www.baidu.com</span><br><span class="line">非同源，因为协议不同</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://www.baidu1.com/a.js</span><br><span class="line">http://www.baidu2.com/b.js </span><br><span class="line">非同源，因为域名不同</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">http://www.baidu.com:8000/a.js</span><br><span class="line">http://www.baidu.com/b.js  </span><br><span class="line">非同源，因为端口不同</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http://www.baidu.com/a.js</span><br><span class="line">http://www.baidu.com/b.js   </span><br><span class="line">http://www.baidu.com/test/c.js</span><br><span class="line">同源</span><br></pre></td></tr></table></figure>
+
+<p>属于同源策略的才可以互相通信，否则需要做一些处理后才可以互换“资源”。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p><strong>1.使用jsonp解决跨域</strong></p>
+<p><strong>原理</strong>：跨域访问的只限制xhr类型的请求，所以js中就利用了这一特点，让服务端不在返回的是一个JSON格式的数据，而是返回一段JS代码，将JSON的数据以参数的形式传递到这个函数中，而函数的名称就是callback参数的值。</p>
+<p><strong>实现</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 处理跨域之前 AJAX正常的发送请求：</span><br><span class="line">$(&quot;#demo1&quot;).click(function()&#123;</span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">        url : &apos;http://www.tpadmin.top/Index/Test/crossDomain&apos;,</span><br><span class="line">        data : &#123;&#125;,</span><br><span class="line">        type : &apos;get&apos;,</span><br><span class="line">        success : function (res) &#123;</span><br><span class="line">            //No &apos;Access-Control-Allow-Origin&apos; header is present on the requested resource. Origin &apos;http://127.0.0.1&apos; is therefore not allowed access. 在执行时候报出的错误，这代表了跨域错误</span><br><span class="line">            alert(res);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 处理跨域  使用jsonp</span><br><span class="line">$(&quot;#demo2&quot;).click(function()&#123;</span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">        url : &apos;http://www.tpadmin.top/Index/Test/crossDomain&apos;,</span><br><span class="line">        data : &#123;&#125;,</span><br><span class="line">        type : &apos;get&apos;,</span><br><span class="line">        dataType : &apos;jsonp&apos;, </span><br><span class="line">        success : function (res) &#123;</span><br><span class="line">            alert(res);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>JSONP只支持GET请求，对POST请求不友好。</li>
+<li>它只支持跨域HTTP请求。</li>
+</ol>
+<p><strong>2.使用CORS解决跨域</strong></p>
+<p>CORS是一个W3C标准，全称是”<strong>跨域资源共享</strong>“。它允许浏览器向跨源服务器发出XMLHttpRequest请求。</p>
+<p>此外，CORS需要浏览器和服务端同时支持，除了IE浏览器10版本以下的其他浏览器都已经支持，服务端和AJAX的原理类似，只需要在响应头里增加一些条件即可，一般通过过滤器完成。</p>
+<p><strong>原理</strong>：浏览器会将ajax请求分为两类，其处理方案略有差异：简单请求、特殊请求。</p>
+<p>（1）简单请求：需要满足两个条件。</p>
+<ol>
+<li>请求方法为POST GET HEAD三种的其中之一。</li>
+<li>请求头中不存在自定义头，即只包含以下几个字段：<br>Accept、Accept-Language、Content-Language、Last-Event-ID、Content-Type( 值为 application/x-www-form-urlencoded、multipart/form-data、text/plain 其中之一 ）</li>
+</ol>
+<p>当浏览器发现发现的ajax请求是简单请求时，会在请求头中携带一个字段：Origin.<br><img src="https://img-blog.csdnimg.cn/20200513200210588.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2FsaXV5dTQyMg==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>Origin中会指出当前请求属于哪个域（协议+域名+端口）。服务会根据这个值决定是否允许其跨域。</p>
+<p>如果服务器允许跨域，需要在返回的响应头中携带下面信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Origin: http://manage.leyou.com</span><br><span class="line">Access-Control-Allow-Credentials: true</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br></pre></td></tr></table></figure>
+<p>Access-Control-Allow-Origin：可接受的域，是一个具体域名或者*，代表任意；<br>Access-Control-Allow-Credentials：是否允许携带cookie，默认情况下，cors不会携带cookie，除非这个值是true。</p>
+<p>如果跨域请求要想操作cookie，需要满足3个条件：</p>
+<ul>
+<li>服务的响应头中需要携带Access-Control-Allow-Credentials并且为true。</li>
+<li>浏览器发起ajax需要指定withCredentials 为true</li>
+<li>响应头中的Access-Control-Allow-Origin一定不能为*，必须是指定的域名</li>
+</ul>
+<p>（2）复杂请求：</p>
+<p>如果不符合简单请求的要求，则判断为复杂请求，例如请求方式为PUT，会在正式通信之前进行一次HTTP查询请求，称为“预检请求”。</p>
+<p>即：浏览器先询问服务器，当前网页所在的域名是否在服务器的许可名单之中，以及可以使用哪些HTTP动词和头信息字段。只有得到肯定答复，浏览器才会发出正式的XMLHttpRequest请求，否则就报错。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 复杂请求的请求头举例：</span><br><span class="line">OPTIONS /cors HTTP/1.1</span><br><span class="line">Origin: http://manage.leyou.com</span><br><span class="line">Access-Control-Request-Method: PUT</span><br><span class="line">Access-Control-Request-Headers: X-Custom-Header</span><br><span class="line">Host: api.leyou.com</span><br><span class="line">Accept-Language: en-US</span><br><span class="line">Connection: keep-alive</span><br><span class="line">User-Agent: Mozilla/5.0...</span><br></pre></td></tr></table></figure>
+
+<p>服务器接收到“预检请求”，如果允许跨域，则会发出响应：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 复杂请求 允许跨域 的请求头举例：</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Mon, 01 Dec 2008 01:15:39 GMT</span><br><span class="line">Server: Apache/2.0.61 (Unix)</span><br><span class="line">Access-Control-Allow-Origin: http://manage.leyou.com</span><br><span class="line">Access-Control-Allow-Credentials: true</span><br><span class="line">Access-Control-Allow-Methods: GET, POST, PUT</span><br><span class="line">Access-Control-Allow-Headers: X-Custom-Header</span><br><span class="line">Access-Control-Max-Age: 1728000</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line">Content-Encoding: gzip</span><br><span class="line">Content-Length: 0</span><br><span class="line">Keep-Alive: timeout=2, max=100</span><br><span class="line">Connection: Keep-Alive</span><br><span class="line">Content-Type: text/plain</span><br></pre></td></tr></table></figure>
+<p>除了Access-Control-Allow-Origin和Access-Control-Allow-Credentials以外，这里又额外多出3个头：</p>
+<ul>
+<li>Access-Control-Allow-Methods：允许访问的方式</li>
+<li>Access-Control-Allow-Headers：允许携带的头</li>
+<li>Access-Control-Max-Age：本次许可的有效时长，单位是秒，过期之前的 ajax请求就无需再次进行预检了</li>
+</ul>
+<p>如果浏览器得到上述响应，则认定为可以跨域，后续就跟简单请求的处理是一样的了。</p>
+<p><strong>实现</strong>：浏览器端已经实现了跨域，而在服务器端是通过统一拦截器实现的。</p>
+<p>SpringMVC已经帮我们写好了CORS的跨域过滤器：CorsFilter ,内部已经实现了刚才所讲的判定逻辑，我们直接用就好了。</p>
+<p>在Application下编写一个配置类，并且注册CorsFilter：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.web.cors.CorsConfiguration;</span><br><span class="line">import org.springframework.web.cors.UrlBasedCorsConfigurationSource;</span><br><span class="line">import org.springframework.web.filter.CorsFilter;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class GlobalCorsConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    public CorsFilter corsFilter() &#123;</span><br><span class="line">        //1.添加CORS配置信息</span><br><span class="line">        CorsConfiguration config = new CorsConfiguration();</span><br><span class="line">        //1) 允许的域,不要写*，否则cookie就无法使用了</span><br><span class="line">        config.addAllowedOrigin(&quot;http://manage.leyou.com&quot;);</span><br><span class="line">        //2) 是否发送Cookie信息</span><br><span class="line">        config.setAllowCredentials(true);</span><br><span class="line">        //3) 允许的请求方式</span><br><span class="line">        config.addAllowedMethod(&quot;OPTIONS&quot;);</span><br><span class="line">        config.addAllowedMethod(&quot;HEAD&quot;);</span><br><span class="line">        config.addAllowedMethod(&quot;GET&quot;);</span><br><span class="line">        config.addAllowedMethod(&quot;PUT&quot;);</span><br><span class="line">        config.addAllowedMethod(&quot;POST&quot;);</span><br><span class="line">        config.addAllowedMethod(&quot;DELETE&quot;);</span><br><span class="line">        config.addAllowedMethod(&quot;PATCH&quot;);</span><br><span class="line">        // 4）允许的头信息</span><br><span class="line">        config.addAllowedHeader(&quot;*&quot;);</span><br><span class="line"></span><br><span class="line">        //2.添加映射路径，我们拦截一切请求</span><br><span class="line">        UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();</span><br><span class="line">        configSource.registerCorsConfiguration(&quot;/**&quot;, config);</span><br><span class="line"></span><br><span class="line">        //3.返回新的CorsFilter.</span><br><span class="line">        return new CorsFilter(configSource);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.nginx反向代理接口跨域</strong></p>
+<p><strong>原理</strong>：同源策略是浏览器的安全策略，不是HTTP协议的一部分。服务器端调用HTTP接口只是使用HTTP协议，不会执行JS脚本，不需要同源策略，也就不存在跨越问题。</p>
+<p><strong>实现</strong>：通过nginx配置一个代理服务器（域名与domain1相同，端口不同）做跳板机，反向代理访问domain2接口，并且可以顺便修改cookie中domain信息，方便当前域cookie写入，实现跨域登录。</p>
+<p> nginx具体配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#proxy服务器</span><br><span class="line">server &#123;</span><br><span class="line">    listen       81;</span><br><span class="line">    server_name  www.domain1.com;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass   http://www.domain2.com:8080;  #反向代理</span><br><span class="line">        proxy_cookie_domain www.domain2.com www.domain1.com; #修改cookie里域名</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line"></span><br><span class="line">        # 当用webpack-dev-server等中间件代理接口访问nignx时，此时无浏览器参与，故没有同源限制，下面的跨域配置可不启用</span><br><span class="line">        add_header Access-Control-Allow-Origin http://www.domain1.com;  #当前端只跨域不带cookie时，可为*</span><br><span class="line">        add_header Access-Control-Allow-Credentials true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>前端代码 举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var xhr = new XMLHttpRequest();</span><br><span class="line"></span><br><span class="line">// 前端开关：浏览器是否读写cookie</span><br><span class="line">xhr.withCredentials = true;</span><br><span class="line"></span><br><span class="line">// 访问nginx中的代理服务器</span><br><span class="line">xhr.open(&apos;get&apos;, &apos;http://www.domain1.com:81/?user=admin&apos;, true);</span><br><span class="line">xhr.send();</span><br></pre></td></tr></table></figure>
+
+<p>Node.js后台举例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var http = require(&apos;http&apos;);</span><br><span class="line">var server = http.createServer();</span><br><span class="line">var qs = require(&apos;querystring&apos;);</span><br><span class="line"></span><br><span class="line">server.on(&apos;request&apos;, function(req, res) &#123;</span><br><span class="line">    var params = qs.parse(req.url.substring(2));</span><br><span class="line"></span><br><span class="line">    // 向前台写cookie</span><br><span class="line">    res.writeHead(200, &#123;</span><br><span class="line">        &apos;Set-Cookie&apos;: &apos;l=a123456;Path=/;Domain=www.domain2.com;HttpOnly&apos;   // HttpOnly:脚本无法读取</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    res.write(JSON.stringify(params));</span><br><span class="line">    res.end();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.listen(&apos;8080&apos;);</span><br><span class="line">console.log(&apos;Server is running at port 8080...&apos;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>4.vue解决跨域</strong><br>利用node + webpack + webpack-dev-server代理接口跨域。在开发环境下，由于vue渲染服务和接口代理服务都是webpack-dev-server同一个，所以页面与代理接口之间不再跨域，无须设置headers跨域信息了。</p>
+<p>webpack.config.js 的配置:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &#123;&#125;,</span><br><span class="line">    module: &#123;&#125;,</span><br><span class="line">    ...</span><br><span class="line">    devServer: &#123;</span><br><span class="line">        historyApiFallback: true,</span><br><span class="line">        proxy: [&#123;</span><br><span class="line">            context: &apos;/login&apos;,</span><br><span class="line">            target: &apos;http://www.domain2.com:8080&apos;,  // 代理跨域目标接口</span><br><span class="line">            changeOrigin: true,</span><br><span class="line">            secure: false,  // 当代理某些https服务报错时用</span><br><span class="line">            cookieDomainRewrite: &apos;www.domain1.com&apos;  // 可以为false，表示不修改</span><br><span class="line">        &#125;],</span><br><span class="line">        noInfo: true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+	
+			<div>
+			
+				<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+			
+			</div>
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Larryu
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2020/05/13/%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" title="几种真的很常见的跨域解决方案！">http://yoursite.com/2020/05/13/%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/undefined" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+	  
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%AB%98%E9%A2%91%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag"># 高频面试题</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/05/06/%E8%BE%93%E5%85%A5URL%E5%90%8E%E5%8F%91%E7%94%9F%E4%BA%86%E4%BA%9B%E4%BB%80%E4%B9%88/" rel="next" title="当我们输入网址后都发生了什么？！！">
+                  <i class="fa fa-chevron-left"></i> 当我们输入网址后都发生了什么？！！
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是跨域"><span class="nav-number">1.</span> <span class="nav-text">什么是跨域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同源策略"><span class="nav-number">2.</span> <span class="nav-text">同源策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法"><span class="nav-number">3.</span> <span class="nav-text">解决方法</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Larryu"
+      src="/images/myblog.png">
+  <p class="site-author-name" itemprop="name">Larryu</p>
+  <div class="site-description" itemprop="description">业精于勤荒于嬉，行成于思毁于随。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/aliuyu422" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;aliuyu422" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/undefined" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Larryu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+<span id="sitetime"></span>
+<script language=javascript>
+  function siteTime(){
+    window.setTimeout("siteTime()", 1000);
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var days = hours * 24;
+    var years = days * 365;
+    var today = new Date();
+    var todayYear = today.getFullYear();
+    var todayMonth = today.getMonth()+1;
+    var todayDate = today.getDate();
+    var todayHour = today.getHours();
+    var todayMinute = today.getMinutes();
+    var todaySecond = today.getSeconds();
+    var t1 = Date.UTC(2018,06,07,12,00,00); // 设置建立网站的时间
+    var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+    var diff = t2-t1;
+    var diffYears = Math.floor(diff/years);
+    var diffDays = Math.floor((diff/days)-diffYears*365);
+    var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+    var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+    var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+    document.getElementById("sitetime").innerHTML=" 已运行"+diffYears+" 年 "diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+  }
+  siteTime();
+</script>
+
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共6.4k字</span>
+  <span class="post-meta-divider">|</span>
+  本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  <span class="post-meta-divider">|</span>
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+  <span class="post-meta-divider">|</span>
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
