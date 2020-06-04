@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>常见的Linux命令（持续学习）</title>
+    <url>/2020/06/04/%E5%B8%B8%E8%A7%81%E7%9A%84Linux%E5%91%BD%E4%BB%A4%EF%BC%88%E6%8C%81%E7%BB%AD%E5%AD%A6%E4%B9%A0%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>学习无止境，请继续求知，继续完善。</p>
+<a id="more"></a>
+
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p>ls:列出某文件夹下的文件，添加参数可实现更细致的功能，<br>ls -a 列出所有文件，包括隐藏文件<br>ls -l 列出文件及其详细信息<br>cd切换目录,cd到不存在的目录时会报错<br>pwd打印当前目录<br>cat:读取某一个文件内的内容<br>wc:获取某一个文件的行数和字数<br>cp:复制某文件<br>mkdir:创建目录<br>rmdir：删除目录<br>rm-rf:r删除内部所有文件，f参数表示强制，rm -r junk删除junk目录及其下面的所有文件；<br>mv移动 mv photos.jpg Photos 将photos移动到文件夹Photos下<br>sort排序<br>diff:比较两个文件的异同</p>
+<p>显示tcp的端口和进程等相关情况：netstat -tnlp<br>验证是否安装：rpm -p 文件名<br>查询java环境变量:java -version<br>查看文件的方法：cat 文件名<br>mv 原名 修改名 修改文件名<br>rpm -qa |grep java 看是否安装了java<br>echo $PATH 看环境变量是否配置了java路径<br>find / -name java 查找java文件</p>
+<h2 id="处理"><a href="#处理" class="headerlink" title="处理"></a>处理</h2><p>vi编辑器有三种模式：<br>命令模式，编辑模式，末行模式<br>打开vi后首先是命令模式，用i,o,a等进入编辑模式，按esc退出编辑模式，回到命令模式。<br>在命令模式下输入:wq表示保存退出，:wq!强制保存退出，:w表示保存，:w file表示保存在另一个文件中 :q表示退出<br>在命令模式下可以用用ZZ，ZQ这些指令直接保存退出。</p>
+<p>tar<br>-c: 建立压缩档案<br>-x：解压<br>-t：查看内容<br>-r：向压缩归档文件末尾追加文件<br>-u：更新原压缩包中的文件<br>解压<br>tar -xvf file.tar //解压 tar包<br>tar -xzvf file.tar.gz //解压tar.gz<br>tar -xjvf file.tar.bz2 //解压 tar.bz2<br>tar -xZvf file.tar.Z //解压tar.Z<br>unrar e file.rar //解压rar<br>unzip file.zip //解压zip</p>
+<p>例如：<br>解压jdk到指定文件夹：<br>tar -xzvf jdk-8u131-linux-x64.tar.gz -C /usr/local/java</p>
+<h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><p>Tap:点击Tab键可以实现命令补全,目录补全、命令参数补全;<br>Ctrl+c:强行终止当前程序（常用）;<br>Ctrl+d:键盘输入结束或退出终端（常用）;<br>Ctrl+s:暂停当前程序，暂停后按下任意键恢复运行;<br>Ctrl+z:将当前程序放到后台运行，恢复到前台为命令fg;<br>Ctrl+a:将光标移至输入行头，相当于Home键;<br>Ctrl+e:将光标移至输入行末，相当于End键;<br>Ctrl+k:删除从光标所在位置到行末,常配合ctrl+a使用;<br>Alt+Backspace:向前删除一个单词，常配合ctrl+e使用;<br>Shift+PgUp:将终端显示向上滚动;<br>Shift+PgDn:将终端显示向下滚动;<br>上下方向键:浏览历史输入记录;</p>
+<h2 id="系统相关"><a href="#系统相关" class="headerlink" title="系统相关"></a>系统相关</h2><p>date:获取当前时间<br>uname:返回系统名称<br>hostname：返回系统的主机名称<br>–version/-V查看某个程序的版本<br>history显示历史<br>echo：返回你给的值,可以简单理解为js中的console或python中的print<br>man使用一个叫做less的程序，查看某个命令的帮助文档<br>less:linenumer u d keyarray search(大小写敏感)，正则表达式<br>crontab -l -u XXX  查看XXX用户的定时任务</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>2020年5月的一些小事</title>
     <url>/2020/06/04/2020%E5%B9%B45%E6%9C%88%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E4%BA%8B/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>达克效应：越是缺乏技能、能力和知识的人，往往越容易夸大自己的能力和知识。</p>
