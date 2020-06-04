@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-05-13T14:25:32.116Z</updated>
+  <updated>2020-06-04T07:18:40.145Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2020年5月的一些小事</title>
+    <link href="http://yoursite.com/2020/06/04/2020%E5%B9%B45%E6%9C%88%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E4%BA%8B/"/>
+    <id>http://yoursite.com/2020/06/04/2020%E5%B9%B45%E6%9C%88%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E4%BA%8B/</id>
+    <published>2020-06-04T07:17:11.392Z</published>
+    <updated>2020-06-04T07:18:40.145Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>达克效应：越是缺乏技能、能力和知识的人，往往越容易夸大自己的能力和知识。</p><a id="more"></a><h2 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h2><p>连续加了一个月的班，五一没有休息，一个月一次双休，这个月一直做着一些运维的事情，偶尔做一些研发的活儿，每天会和领导打车来甲方爸爸这边现场支撑。单程三十公里，每天往返六十公里在路上，遇到偶尔堵车的周一和周五，会浪费一个小时在路上。</p><p>今年大势所趋，各个互联网公司都在裁员的背景下，本来已经很久没有做分内的工作，以为是要背上包劝退了，我竟然奇迹般的活到了现在？</p><p>对于未来的工作依然没有想法，没有想到一个合适的身份在这个社会立足，依旧是苟活在互联网的卑微仔，那么就做好当下的事情，持续观望吧！</p><h2 id="朋友"><a href="#朋友" class="headerlink" title="朋友"></a>朋友</h2><p>考研：身边二战考研和下一届的学弟学妹考研的成绩都在最近出来了，感觉大家都有勇气和干劲，很多朋友也都上了岸，当然也有遗憾落榜，每个人的选择都不一样，但是希望每个人对自己的选择负责和充满斗志。不患得患失，致敬命运。</p><p>贵阳：疫情后老姐也搬来贵阳顺利找到工作了，住在小区附近，偶尔可以和她出来谈谈人生理想，聊聊家里的秘密；偶尔也有老友路过贵阳，也有朋友时常关照，前阵子闲鱼上淘到的麻将机就派上用场了，凶多吉少。</p><h2 id="闲谈"><a href="#闲谈" class="headerlink" title="闲谈"></a>闲谈</h2><p>我现在应该长大了一些，不是那个虚拟世界都斗嘴必须分你上我下的性格了，好像慢慢知道这个世界上存在什么人都是合理的，然而与其把时间浪费在没有意义的重复争吵上，不如去看一看你还没有见过世界的其他面。</p><p>我不喜欢喧闹，是特别不喜欢在大庭广众之下可以起哄喧哗，不喜欢成为焦点，但是我很喜欢充满人间烟火味的集市，小区门口成两排的路边摊，各自有各自的喧闹，但是对于我也很宁静。</p><p>母亲节这天，吃完饭在园区坐着，恰好听见一个员工母亲和他儿子打电话，原来父母的思念都是藏在心里，欣慰都是在眼里。</p><p>坐在隧道开窗的车里，把耳机声音调到最大，闭着眼睛够着去听一些歌，以为能从中细品出异域风情，能够身同感受融化在其中，一些民歌，一些诗意，睁开眼刚出隧道的刹那眼睛还是被刚洒下的光刺穿，黑夜如此美好，人们却用来睡觉。</p><p>五月份身体先后出现一些些情况，先是脚受伤了，然后腹泻、头痛、落枕，镜框自然衰亡。拜拜了您！</p><p>下个月：看完一本书、加强运动、噩运消散！</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;达克效应：越是缺乏技能、能力和知识的人，往往越容易夸大自己的能力和知识。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="live" scheme="http://yoursite.com/categories/live/"/>
+    
+    
+      <category term="live" scheme="http://yoursite.com/tags/live/"/>
+    
+  </entry>
   
   <entry>
     <title>几种真的很常见的跨域解决方案！</title>
