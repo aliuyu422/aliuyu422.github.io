@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>前端常见问题汇总</title>
+    <url>/2020/10/30/%E5%89%8D%E7%AB%AF%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>如何实现数组扁平化、深拷贝和浅拷贝…</p>
+<a id="more"></a>
+
+<h2 id="前端常见问题"><a href="#前端常见问题" class="headerlink" title="前端常见问题"></a>前端常见问题</h2><h3 id="如何实现数组扁平化"><a href="#如何实现数组扁平化" class="headerlink" title="如何实现数组扁平化"></a>如何实现数组扁平化</h3><ol>
+<li><p>reduce 遍历数组每一项，若值为数组则递归遍历，否则concat</p>
+</li>
+<li><p>toString 和 split 调用数组的toString方法，将数组变为字符串然后在用split分割还原成数组</p>
+</li>
+<li><p>join 和 split  和上面类型，join同样也可以将数组转换为字符串</p>
+</li>
+<li><p>递归 递归的遍历每一项，若为数组则继续遍历，否则concat</p>
+</li>
+<li><p>es6中的扩展运算符  [].concat(…[1, 2, 3, [4, 5]]);  // [1, 2, 3, 4, 5]</p>
+<p> <em>核心：遍历数组arr，若arr[i]为数组则递归遍历，直到arr[i]不为数组然后与之前的结果concat</em></p>
+</li>
+</ol>
+<h3 id="判断数组中是否有该元素的方法"><a href="#判断数组中是否有该元素的方法" class="headerlink" title="判断数组中是否有该元素的方法"></a>判断数组中是否有该元素的方法</h3><p>es5： indexOf / includes </p>
+<p>es6 ： has</p>
+<h3 id="深拷贝和浅拷贝"><a href="#深拷贝和浅拷贝" class="headerlink" title="深拷贝和浅拷贝"></a>深拷贝和浅拷贝</h3><p>假设B复制了A，修改A的时候，看B是否发生变化：</p>
+<p>如果B跟着<strong>也变了</strong>，说明是浅拷贝（修改堆内存中的同一个值）</p>
+<p>如果B<strong>没有改变</strong>，说明是深拷贝（修改堆内存中的不同的值）</p>
+<p>浅拷贝实例</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var a = [1, 2, 3, 4, 5];</span><br><span class="line">var b = a;</span><br><span class="line">a[0] = 2</span><br><span class="line">console.log(a);</span><br><span class="line">console.log(b);</span><br><span class="line"></span><br><span class="line">//因为b浅拷贝a, ab指向同一个内存地址(堆内存中存的值)</span><br><span class="line">//b会随着a的变化而变化</span><br><span class="line">//[2, 2, 3, 4, 5]</span><br><span class="line">//[2, 2, 3, 4, 5]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>深拷贝实例</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">function deepClone(obj)</span><br><span class="line">&#123;</span><br><span class="line">var` `newObj = obj instanceof Array ? []:&#123;&#125;;</span><br><span class="line">if``(``typeof` `obj !== ``&apos;object&apos;``)</span><br><span class="line">&#123;</span><br><span class="line">return` `obj;</span><br><span class="line">&#125;``else``&#123;</span><br><span class="line">for``(``var` `i ``in` `obj)</span><br><span class="line">&#123;</span><br><span class="line">newObj[i] = ``typeof` `obj[i] === ``&apos;object&apos;` `? deepClone(obj[i]) : obj[i];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">return` `newObj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">var` `a = [1, 2, 4, 6, ``&quot;a&quot;``, ``&quot;12&quot;``, [1, 2]];</span><br><span class="line">var` `b = deepClone(a);</span><br><span class="line">a[3] = 7;</span><br><span class="line">console.log(a);</span><br><span class="line">console.log(b);</span><br><span class="line">[ 1, 2, 4, 7, &apos;a&apos;, &apos;12&apos;, [ 1, 2 ] ]</span><br><span class="line">[ 1, 2, 4, 6, &apos;a&apos;, &apos;12&apos;, [ 1, 2 ] ]</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="HTTP和HTTPS的区别"><a href="#HTTP和HTTPS的区别" class="headerlink" title="HTTP和HTTPS的区别"></a>HTTP和HTTPS的区别</h3><p>​    1、https协议需要到CA申请证书，一般免费证书较少，因而需要一定费用。</p>
+<p>​    2、http是超文本传输协议，信息是明文传输，https则是具有安全性的ssl/tls加密传输协议。</p>
+<p>​    3、http和https使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。</p>
+<p>​    4、http的连接很简单，是无状态的；HTTPS协议是由SSL/TLS+HTTP协议构建的可进行加密传输、身份认证的网络协议，比http协议安全。</p>
+<h3 id="几种常见的网络攻击"><a href="#几种常见的网络攻击" class="headerlink" title="几种常见的网络攻击"></a>几种常见的网络攻击</h3><ol>
+<li><h4 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h4><p> ​        攻击者一般会使用吸引人的图片去引导用户点击进去他设定好的全套，然后你刚登录的A网站没有关闭，这时候攻击者会利用JS事件去模拟用户请求A网站信息，从而就得到了目的。预防措施：为表单提交都加上自己定义好的token然后加密好，后台也一样的规则然后进行对比。</p>
+</li>
+<li><h4 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h4><p> 攻击者一般通过script标签对网站注入一些可执行的代码，这样就可以很轻松的获取到用户的一些信息。预防措施：strip_tags() 函数,过滤掉输入、输出里面的恶意标签和使用htmlentities()函数把标签字符串转换成html实体。</p>
+</li>
+<li><h4 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h4><p> 就是通过把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。预防措施：把一些sql语句进行过滤，比如delete update insert select * 或者使用PDO占位符进行转义。</p>
+</li>
+<li><h4 id="DDOS"><a href="#DDOS" class="headerlink" title="DDOS"></a>DDOS</h4><p> 攻击者通过漏洞往网页进行病毒木马的注入。使用防火墙，限制访问ip地址等可以有效地防止。</p>
+</li>
+</ol>
+<h3 id="XSS-的防范"><a href="#XSS-的防范" class="headerlink" title="XSS 的防范"></a>XSS 的防范</h3><p>恶意代码未经过滤，与网站正常的代码混在一起；浏览器无法分辨哪些脚本是可信的，导致恶意脚本被执行，进而危害数据安全。</p>
+<ol>
+<li><h5 id="输入过滤"><a href="#输入过滤" class="headerlink" title="输入过滤"></a>输入过滤</h5></li>
+<li><h5 id="输入内容长度控制"><a href="#输入内容长度控制" class="headerlink" title="输入内容长度控制"></a>输入内容长度控制</h5></li>
+<li><h5 id="改成纯前端渲染，把代码和数据分隔开"><a href="#改成纯前端渲染，把代码和数据分隔开" class="headerlink" title="改成纯前端渲染，把代码和数据分隔开"></a>改成纯前端渲染，把代码和数据分隔开</h5></li>
+<li><h5 id="对-HTML做充分转义"><a href="#对-HTML做充分转义" class="headerlink" title="对 HTML做充分转义"></a>对 HTML做充分转义</h5></li>
+<li><h5 id="避免在字符串中拼接不可信数据"><a href="#避免在字符串中拼接不可信数据" class="headerlink" title="避免在字符串中拼接不可信数据"></a>避免在字符串中拼接不可信数据</h5></li>
+</ol>
+<h3 id="CSS单位的区别"><a href="#CSS单位的区别" class="headerlink" title="CSS单位的区别"></a>CSS单位的区别</h3><ol>
+<li>px:相对长度单位，像素px是相对于显示器屏幕分辨率而言的.</li>
+<li>em: 相对长度单位，参考物为父级元素，若无父级元素，则和px类似</li>
+<li>rem: 相对长度单位，参考物为根元素(与em的区别)</li>
+<li>vw: 是相对视口的宽度而定的，长度等于视口宽度的1/100</li>
+</ol>
+<p>PS（指的就是网页中你看到的部分。其大小约等于浏览器窗口大小减去地址栏、标签页、工具栏的大小）</p>
+<h3 id="重绘和回流"><a href="#重绘和回流" class="headerlink" title="重绘和回流"></a>重绘和回流</h3><ol>
+<li>回流：当render tree中的一部分(或全部)因为元素的规模尺寸，布局，隐藏等改变而需要重新构建。这就称为回流(reflow)。每个页面至少需要一次回流，就是在页面第一次加载的时候，这时候是一定会发生回流的，因为要构建render tree。</li>
+<li>重绘：当render tree中的一些元素需要更新属性，而这些属性只是影响元素的外观，风格，而不会影响布局的，比如background-color。则就叫称为重绘。</li>
+</ol>
+<h6 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h6><p>​    回流必将引起重绘，而重绘不一定会引起回流。</p>
+<p>​    当界面的字体颜色发生改变时只需要重绘，而当页面布局和几何属性改变时就需要回流添加或者删除可见的DOM元素，元素位置改变，元素尺寸改变时则需要回流。</p>
+]]></content>
+      <categories>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>mysql的奥秘（持续学习）</title>
     <url>/2020/06/05/MYSQL%E7%9A%84%E5%A5%A5%E5%A6%99%EF%BC%88%E6%8C%81%E7%BB%AD%E5%AD%A6%E4%B9%A0%EF%BC%89/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>活到老，select到老！</p>
