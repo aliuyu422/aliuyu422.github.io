@@ -1,6 +1,6 @@
 import { execFile } from 'node:child_process'
 import { randomUUID } from 'node:crypto'
-import { access, readFile, writeFile } from 'node:fs/promises'
+import { access, readdir, readFile, writeFile } from 'node:fs/promises'
 import http from 'node:http'
 import path from 'node:path'
 import process from 'node:process'
@@ -33,6 +33,10 @@ function safeFileName(value) {
 
 function escapeSingleQuotes(value) {
   return value.replace(/\\/g, '\\\\').replace(/'/g, "\\'")
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
 function currentDate() {
@@ -78,15 +82,85 @@ async function githubStatus() {
   }
 }
 
-async function saveArticle({ section: sectionName, title: rawTitle, content = '' }) {
-  const section = sections.find((item) => item.name === sectionName || item.path === sectionName)
+function findSection(sectionName) {
+  return sections.find((item) => item.name === sectionName || item.path === sectionName)
+}
+
+function validateSlug(value) {
+  const slug = String(value || '').trim()
+  if (!slug || slug === '.' || slug === '..' || path.basename(slug) !== slug || /[\\/\u0000-\u001f]/.test(slug)) {
+    throw new Error('文章路径无效。')
+  }
+  return slug
+}
+
+function articleLocation(sectionName, rawSlug) {
+  const section = findSection(sectionName)
+  if (!section) throw new Error('请选择有效栏目。')
+  const slug = validateSlug(rawSlug)
+  return {
+    section,
+    slug,
+    filePath: path.join(root, 'docs', ...section.path.split('/'), `${slug}.md`)
+  }
+}
+
+function articleTitle(source, fallback) {
+  const frontmatterTitle = source.match(/^title:\s*["']?(.+?)["']?\s*$/m)?.[1]?.trim()
+  const headingTitle = source.replace(/^---[\s\S]*?---\s*/, '').match(/^#\s+(.+)$/m)?.[1]?.trim()
+  return frontmatterTitle || headingTitle || fallback
+}
+
+function articleBody(source) {
+  return source
+    .replace(/^---[\s\S]*?---\s*/, '')
+    .replace(/^#\s+.+(?:\r?\n)+/, '')
+    .trim()
+}
+
+async function listArticles() {
+  const articles = []
+  for (const section of sections) {
+    const directory = path.join(root, 'docs', ...section.path.split('/'))
+    const entries = await readdir(directory, { withFileTypes: true })
+    for (const entry of entries) {
+      if (!entry.isFile() || !entry.name.endsWith('.md')) continue
+      const slug = entry.name.slice(0, -3)
+      const source = await readFile(path.join(directory, entry.name), 'utf8')
+      articles.push({
+        section: section.name,
+        sectionPath: section.path,
+        slug,
+        title: articleTitle(source, slug)
+      })
+    }
+  }
+  return articles.sort((a, b) => a.section.localeCompare(b.section, 'zh-CN') || a.title.localeCompare(b.title, 'zh-CN'))
+}
+
+async function getArticle(sectionName, rawSlug) {
+  const location = articleLocation(sectionName, rawSlug)
+  if (!await exists(location.filePath)) throw new Error('文章不存在。')
+  const source = await readFile(location.filePath, 'utf8')
+  return {
+    section: location.section.name,
+    slug: location.slug,
+    title: articleTitle(source, location.slug),
+    content: articleBody(source),
+    file: path.relative(root, location.filePath)
+  }
+}
+
+async function saveArticle({ section: sectionName, title: rawTitle, content = '', slug: existingSlug }) {
+  const section = findSection(sectionName)
   if (!section) throw new Error('请选择有效栏目。')
 
   const title = String(rawTitle || '').trim()
   const fileName = safeFileName(title)
   if (!title || !fileName) throw new Error('文章标题不能为空。')
 
-  const articlePath = path.join(root, 'docs', ...section.path.split('/'), `${fileName}.md`)
+  const slug = existingSlug ? validateSlug(existingSlug) : fileName
+  const articlePath = path.join(root, 'docs', ...section.path.split('/'), `${slug}.md`)
   const oldArticle = await exists(articlePath) ? await readFile(articlePath, 'utf8') : ''
   const oldDate = oldArticle.match(/^date:\s*(.+)$/m)?.[1]?.trim()
   const body = String(content).trim() || '在这里开始写作。'
@@ -95,19 +169,29 @@ async function saveArticle({ section: sectionName, title: rawTitle, content = ''
 
   const sidebarPath = path.join(root, '.vitepress', 'sidebar.mts')
   const sidebar = await readFile(sidebarPath, 'utf8')
-  const link = `/${section.path}/${fileName}`
-  if (!sidebar.includes(`link:'${escapeSingleQuotes(link)}'`)) {
+  const link = `/${section.path}/${slug}`
+  const escapedLink = escapeSingleQuotes(link)
+  let updatedSidebar = sidebar
+  if (!sidebar.includes(`link:'${escapedLink}'`)) {
     const eol = sidebar.includes('\r\n') ? '\r\n' : '\n'
     const groupStart = sidebar.indexOf(`    '/${section.path}/':[{`)
     const itemsStart = sidebar.indexOf('items:', groupStart)
     const itemsEnd = sidebar.indexOf(`${eol}      ]`, itemsStart)
     if (groupStart < 0 || itemsStart < 0 || itemsEnd < 0) throw new Error('无法识别侧边栏栏目。')
-    const entry = `${eol}        {text:'${escapeSingleQuotes(title)}',link:'${escapeSingleQuotes(link)}'},`
-    await writeFile(sidebarPath, sidebar.slice(0, itemsEnd) + entry + sidebar.slice(itemsEnd), 'utf8')
+    const entry = `${eol}        {text:'${escapeSingleQuotes(title)}',link:'${escapedLink}'},`
+    updatedSidebar = sidebar.slice(0, itemsEnd) + entry + sidebar.slice(itemsEnd)
+  } else if (existingSlug) {
+    const entryPattern = new RegExp(`\\{text:'(?:\\\\.|[^'])*',link:'${escapeRegExp(escapedLink)}'\\}`)
+    updatedSidebar = sidebar.replace(entryPattern, `{text:'${escapeSingleQuotes(title)}',link:'${escapedLink}'}`)
+  }
+  if (updatedSidebar !== sidebar) {
+    await writeFile(sidebarPath, updatedSidebar, 'utf8')
   }
 
   return {
     file: path.relative(root, articlePath),
+    slug,
+    title,
     page: `https://aliuyu422.github.io${encodeURI(link)}.html`
   }
 }
@@ -192,6 +276,15 @@ const page = String.raw`<!doctype html>
     .field { margin-bottom: 16px; }
     .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
     .message { flex: 1; min-width: 240px; }
+    .library { margin-top: 22px; }
+    .library-tools { display: flex; gap: 12px; margin-bottom: 16px; }
+    .library-tools input { flex: 1; }
+    .article-list { display: grid; gap: 10px; }
+    .article-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 16px; border: 1px solid #e5e8f0; border-radius: 12px; }
+    .article-info { min-width: 0; }
+    .article-title { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .article-meta { margin-top: 4px; color: #7a8296; font-size: 12px; }
+    .empty { padding: 28px; text-align: center; color: #7a8296; border: 1px dashed #dce1ec; border-radius: 12px; }
     .output { display: none; margin-top: 18px; padding: 16px; border-radius: 12px; background: #121827; color: #d7e1ff; white-space: pre-wrap; max-height: 320px; overflow: auto; font-size: 13px; }
     .output.visible { display: block; }
     @media (max-width: 640px) { header, .editor-head { align-items: flex-start; flex-direction: column; } .shell { padding: 24px 14px 40px; } .panel { padding: 18px; } }
@@ -218,11 +311,18 @@ const page = String.raw`<!doctype html>
         <pre id="output" class="output"></pre>
       </div>
     </section>
+    <section class="panel library">
+      <h2>已有文章</h2>
+      <div class="library-tools"><input id="articleSearch" placeholder="搜索标题或栏目"></div>
+      <div id="articleList" class="article-list"><div class="empty">正在加载文章...</div></div>
+    </section>
   </main>
   <script>
     const token = '__ADMIN_TOKEN__'
     const sections = __SECTIONS__
     let selectedSection = ''
+    let currentSlug = ''
+    let allArticles = []
     const $ = (id) => document.getElementById(id)
     const output = $('output')
 
@@ -243,16 +343,74 @@ const page = String.raw`<!doctype html>
       return data
     }
 
+    function openEditor(section, title = '', content = '', slug = '') {
+      selectedSection = section
+      currentSlug = slug
+      $('selectedSection').textContent = section + (slug ? ' · 编辑文章' : ' · 新增文章')
+      $('title').value = title
+      $('content').value = content
+      $('commitMessage').value = ''
+      $('editor').classList.add('visible')
+      $('title').focus()
+      $('editor').scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+
+    function renderArticles() {
+      const keyword = $('articleSearch').value.trim().toLowerCase()
+      const filtered = allArticles.filter((article) =>
+        !keyword || article.title.toLowerCase().includes(keyword) || article.section.toLowerCase().includes(keyword)
+      )
+      const list = $('articleList')
+      list.replaceChildren()
+      if (!filtered.length) {
+        const empty = document.createElement('div')
+        empty.className = 'empty'
+        empty.textContent = '没有找到文章。'
+        list.appendChild(empty)
+        return
+      }
+      filtered.forEach((article) => {
+        const row = document.createElement('div')
+        row.className = 'article-row'
+        const info = document.createElement('div')
+        info.className = 'article-info'
+        const title = document.createElement('div')
+        title.className = 'article-title'
+        title.textContent = article.title
+        const meta = document.createElement('div')
+        meta.className = 'article-meta'
+        meta.textContent = article.section + ' · ' + article.slug + '.md'
+        const button = document.createElement('button')
+        button.className = 'btn btn-secondary'
+        button.textContent = '编辑'
+        button.addEventListener('click', async () => {
+          button.disabled = true
+          try {
+            showOutput('正在加载文章...')
+            const data = await api('/api/article?section=' + encodeURIComponent(article.section) + '&slug=' + encodeURIComponent(article.slug))
+            openEditor(data.section, data.title, data.content, data.slug)
+            showOutput('已加载：' + data.file)
+          } catch (error) { showOutput(error.message, true) }
+          finally { button.disabled = false }
+        })
+        info.append(title, meta)
+        row.append(info, button)
+        list.appendChild(row)
+      })
+    }
+
+    async function loadArticles() {
+      const data = await api('/api/articles')
+      allArticles = data.articles
+      renderArticles()
+    }
+
     sections.forEach((section) => {
       const card = document.createElement('article')
       card.className = 'category'
       card.innerHTML = '<div class="category-icon">' + section.icon + '</div><h3>' + section.name + '</h3><p>' + section.path + '</p><button class="btn btn-primary">新增文章</button>'
       card.querySelector('button').addEventListener('click', () => {
-        selectedSection = section.name
-        $('selectedSection').textContent = section.name
-        $('editor').classList.add('visible')
-        $('title').focus()
-        $('editor').scrollIntoView({ behavior: 'smooth', block: 'start' })
+        openEditor(section.name)
       })
       $('categories').appendChild(card)
     })
@@ -263,13 +421,15 @@ const page = String.raw`<!doctype html>
       if (!selectedSection) throw new Error('请先选择栏目。')
       const title = $('title').value.trim()
       if (!title) throw new Error('请输入文章标题。')
-      return api('/api/save', { method: 'POST', body: JSON.stringify({ section: selectedSection, title, content: $('content').value }) })
+      return api('/api/save', { method: 'POST', body: JSON.stringify({ section: selectedSection, title, content: $('content').value, slug: currentSlug }) })
     }
 
     $('save').addEventListener('click', async () => {
       try {
         showOutput('正在保存...')
         const result = await saveArticle()
+        currentSlug = result.slug
+        await loadArticles()
         showOutput('草稿已保存：' + result.file)
       } catch (error) { showOutput(error.message, true) }
     })
@@ -281,6 +441,8 @@ const page = String.raw`<!doctype html>
       try {
         showOutput('正在保存文章...')
         const saved = await saveArticle()
+        currentSlug = saved.slug
+        await loadArticles()
         showOutput('已保存：' + saved.file + '\n正在构建并部署，请稍候...')
         const result = await api('/api/publish', { method: 'POST', body: JSON.stringify({ message: $('commitMessage').value }) })
         showOutput(result.output + '\n\n发布完成：' + saved.page)
@@ -293,6 +455,13 @@ const page = String.raw`<!doctype html>
       $('statusText').textContent = data.github.loggedIn ? 'GitHub 已登录' : 'GitHub 未登录，请运行 gh auth login'
       if (data.changes) showOutput('当前未发布变更：\n' + data.changes)
     }).catch((error) => { $('statusText').textContent = error.message })
+    $('articleSearch').addEventListener('input', renderArticles)
+    loadArticles().catch((error) => {
+      const empty = document.createElement('div')
+      empty.className = 'empty'
+      empty.textContent = error.message
+      $('articleList').replaceChildren(empty)
+    })
   </script>
 </body>
 </html>`
@@ -321,6 +490,16 @@ const server = http.createServer(async (request, response) => {
 
     if (request.method === 'GET' && url.pathname === '/api/status') {
       sendJson(response, 200, { github: await githubStatus(), changes: await gitStatus(), publishing })
+      return
+    }
+
+    if (request.method === 'GET' && url.pathname === '/api/articles') {
+      sendJson(response, 200, { articles: await listArticles() })
+      return
+    }
+
+    if (request.method === 'GET' && url.pathname === '/api/article') {
+      sendJson(response, 200, await getArticle(url.searchParams.get('section'), url.searchParams.get('slug')))
       return
     }
 
