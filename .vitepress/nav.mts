@@ -1,6 +1,6 @@
 export default [
   { text: '首页', link: '/' },
-  { text: '新增文章', link: 'http://127.0.0.1:4173', target: '_blank' },
+  { text: '文章管理', link: '/admin/', target: '_blank' },
   { 
     text: '技术分享', 
     items: [

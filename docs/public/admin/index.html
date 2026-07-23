@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https://api.github.com; style-src 'self'; script-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <title>博客文章管理</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <a class="back" href="/">← 返回博客</a>
+        <h1>博客文章管理</h1>
+        <p>在线新增、编辑并发布到 GitHub Pages。</p>
+      </div>
+      <div id="accountBadge" class="account hidden"></div>
+    </header>
+
+    <section id="authPanel" class="card auth-card">
+      <div id="setupView" class="hidden">
+        <span class="eyebrow">首次设置</span>
+        <h2>连接你的 GitHub 仓库</h2>
+        <p class="muted">Token 只保存在此浏览器，并由你设置的密码加密。账号必须是 <strong>aliuyu422</strong>。</p>
+        <label for="setupToken">Fine-grained token</label>
+        <input id="setupToken" type="password" autocomplete="off" placeholder="github_pat_...">
+        <label for="setupPassword">设置解锁密码</label>
+        <input id="setupPassword" type="password" autocomplete="new-password" placeholder="至少 8 位">
+        <label for="setupPasswordAgain">确认解锁密码</label>
+        <input id="setupPasswordAgain" type="password" autocomplete="new-password" placeholder="再次输入密码">
+        <button id="setupButton" class="btn primary full">验证并保存</button>
+        <a class="help" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">创建 fine-grained token</a>
+        <details class="token-help">
+          <summary>Token 应该如何设置？</summary>
+          <ol>
+            <li>Resource owner 选择 <strong>aliuyu422</strong>。</li>
+            <li>Repository access 只选择 <strong>aliuyu422.github.io</strong>。</li>
+            <li>Repository permissions 中将 <strong>Contents</strong> 设为 Read and write。</li>
+          </ol>
+        </details>
+      </div>
+
+      <div id="unlockView" class="hidden">
+        <span class="eyebrow">安全解锁</span>
+        <h2>输入你的后台密码</h2>
+        <p class="muted">密码只在当前浏览器中解密 GitHub token，不会上传或保存为明文。</p>
+        <label for="unlockPassword">解锁密码</label>
+        <input id="unlockPassword" type="password" autocomplete="current-password" placeholder="请输入密码">
+        <button id="unlockButton" class="btn primary full">解锁文章管理</button>
+        <button id="resetButton" class="btn text full">清除本机设置</button>
+      </div>
+      <p id="authMessage" class="message"></p>
+    </section>
+
+    <section id="dashboard" class="hidden">
+      <section class="card">
+        <div class="section-heading">
+          <div><span class="eyebrow">快速开始</span><h2>选择栏目新增文章</h2></div>
+          <button id="lockButton" class="btn secondary">锁定后台</button>
+        </div>
+        <div id="categories" class="category-grid"></div>
+      </section>
+
+      <section id="editorPanel" class="card editor-card hidden">
+        <div class="section-heading">
+          <div><span id="editorMode" class="eyebrow">新增文章</span><h2 id="editorSection">请选择栏目</h2></div>
+          <button id="closeEditor" class="btn secondary">关闭</button>
+        </div>
+        <label for="articleTitle">文章标题</label>
+        <input id="articleTitle" placeholder="请输入文章标题">
+        <label for="articleContent">正文（支持 Markdown）</label>
+        <textarea id="articleContent" placeholder="从这里开始写作……"></textarea>
+        <label for="commitMessage">发布说明</label>
+        <input id="commitMessage" placeholder="例如：发布新的技术总结">
+        <div class="editor-actions">
+          <button id="publishButton" class="btn publish">保存并发布到 GitHub</button>
+        </div>
+        <pre id="publishOutput" class="output hidden"></pre>
+      </section>
+
+      <section class="card">
+        <div class="section-heading">
+          <div><span class="eyebrow">内容管理</span><h2>已有文章</h2></div>
+          <button id="refreshButton" class="btn secondary">刷新</button>
+        </div>
+        <input id="articleSearch" class="search" placeholder="搜索标题、文件名或栏目">
+        <div id="articleList" class="article-list"><div class="empty">正在读取 GitHub 仓库...</div></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
