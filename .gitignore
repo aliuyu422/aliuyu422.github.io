@@ -1,0 +1,6 @@
+node_modules/
+.vitepress/cache/
+.vitepress/dist/
+0.0.0.0/
+127.0.0.1/
+*.local
