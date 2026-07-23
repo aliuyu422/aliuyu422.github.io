@@ -7,6 +7,7 @@
     "build": "vitepress build",
     "preview": "vitepress preview",
     "new": "node scripts/new-article.mjs",
+    "admin": "node scripts/admin-server.mjs",
     "deploy": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/publish.ps1"
   }
 }

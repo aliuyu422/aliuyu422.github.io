@@ -52,6 +52,7 @@ export default {
       text:'育儿分享',
       items: [
         {text:'11',link:'/生活分享/育儿分享/index'},
+        {text:'一岁',link:'/生活分享/育儿分享/一岁'},
       ]
     }],
     // 观读感受模块
