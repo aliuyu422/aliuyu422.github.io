@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
-    "preview": "vitepress preview"
+    "preview": "vitepress preview",
+    "new": "node scripts/new-article.mjs",
+    "deploy": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/publish.ps1"
   }
 }
